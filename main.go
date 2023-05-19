@@ -68,27 +68,7 @@ func getCourse(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-// creation of a course
-func createCourse(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Create course.")
-	w.Header().Set("Content-Type", "application/json")
-
-	// if the data received is empty
-	if r.Body == nil {
-		json.NewEncoder(w).Encode("Please send some data")
-		return
-	}
-	// TODO: if the data received is - {}
-
-	// if the data doesn't have the course name
-	var course Course
-	_ = json.NewDecoder(r.Body).Decode(&course) // decoding the data received
-	if course.IsEmpty() {                       // if no course name, then returning it
-		json.NewEncoder(w).Encode("No data inside JSON")
-		return
-	}
-
-//TODO: User can get all the courses - DONE
-//TODO: Create, delete and update new courses - DONE, LEFT, LEFT
+//TODO: User can get all the courses
+//TODO: Create, delete and update new courses
 //TODO: Helper function to prevent display of courses with no title.
 // Database to be used -> slice
