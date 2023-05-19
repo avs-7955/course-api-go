@@ -101,7 +101,33 @@ func createCourse(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// delete a course
+func deleteCourse(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Delete course.")
+	w.Header().Set("Content-Type", "application/json")
+
+	// get the id from the request
+	params := mux.Vars(r)
+
+	// iterate over the course to find index
+	for index, course := range coursesDb {
+		if course.CourseID == params["id"] {
+			// deleting the course from the sliceDB
+			coursesDb = append(coursesDb[:index], coursesDb[index+1:]...)
+
+			// to send the response to the user
+			json.NewEncoder(w).Encode("The course has been deleted.")
+			return
+		}
+	}
+
+	// incase the course ID doesn't exist
+	content := fmt.Sprintf("No course found with the given id:%s. Please give a valid Course ID.", params["id"])
+	json.NewEncoder(w).Encode(content)
+	return
+}
+
 //TODO: User can get all the courses - DONE
-//TODO: Create, delete and update new courses - DONE, LEFT,LEFT
+//TODO: Create, delete and update new courses - DONE, DONE,LEFT
 //TODO: Helper function to prevent display of courses with no title. - DONE
 // Database to be used -> slice
