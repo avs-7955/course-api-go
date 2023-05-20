@@ -53,6 +53,12 @@ func main() {
 	})
 
 	// routing
+	r.HandleFunc("/", servHome).Methods("GET")
+	r.HandleFunc("/courses", getCourses).Methods("GET")
+	r.HandleFunc("/course/{id}", getCourse).Methods("GET")
+	r.HandleFunc("/course", createCourse).Methods("POST")
+	r.HandleFunc("/course/{id}", updateCourse).Methods("PUT")
+	r.HandleFunc("/course/{id}", deleteCourse).Methods("DELETE")
 
 	// listening to a port
 	log.Fatal(http.ListenAndServe(":3000", r))
