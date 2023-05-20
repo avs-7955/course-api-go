@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -34,6 +35,27 @@ func (c *Course) IsEmpty() bool {
 
 func main() {
 	fmt.Println("API - Udemy.com")
+	r := mux.NewRouter()
+
+	// seeding
+	coursesDb = append(coursesDb, Course{
+		CourseID:    "20",
+		CourseName:  "Web Development Bootcamp",
+		CoursePrice: 499,
+		Author:      &Author{FullName: "Angela Yu", Website: "https://www.udemy.com/user/4b4368a3-b5c8-4529-aa65-2056ec31f37e/"},
+	})
+
+	coursesDb = append(coursesDb, Course{
+		CourseID:    "25",
+		CourseName:  "Python Development Bootcamp",
+		CoursePrice: 399,
+		Author:      &Author{FullName: "Andrei Neagoie", Website: "https://zerotomastery.io/about/instructor/andrei-neagoie/"},
+	})
+
+	// routing
+
+	// listening to a port
+	log.Fatal(http.ListenAndServe(":3000", r))
 }
 
 // controllers - file
