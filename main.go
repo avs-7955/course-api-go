@@ -119,6 +119,14 @@ func createCourse(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// check if course title is duplicated
+	for _, course_in_db := range coursesDb {
+		if course_in_db.CourseName == course.CourseName {
+			json.NewEncoder(w).Encode("A course with the same course name already exists.")
+			return
+		}
+	}
+
 	// create a new UID -> string
 	rand.Seed(time.Now().UnixNano())
 	course.CourseID = strconv.Itoa(rand.Intn(100)) // creating a random number and converting it into string
